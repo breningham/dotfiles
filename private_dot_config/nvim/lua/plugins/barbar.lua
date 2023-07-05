@@ -10,4 +10,9 @@ barbar.setup({
         NvimTree = true,
     },
     no_name_title = nil,
+    icons = {
+        gitsigns = {
+            enabled = true,
+        },
+    },
 })

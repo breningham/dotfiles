@@ -14,5 +14,4 @@ feline.setup({
     components = ctp.get(),
 })
 
-feline.winbar.setup()
 feline.statuscolumn.setup()
