@@ -1,0 +1,7 @@
+: 1685443797:0;nvim ~/.config/zshrc.d/functions
+: 1685444799:0;tmux source ~/.config/tmux/tmux.conf
+: 1685444846:0;$EDITOR $ZDOTDIR/functions
+: 1685444927:0;help
+: 1685444931:0;reload_config
+: 1685444967:0;nvim ~/.config/zshrc.d/.zshrc
+: 1685444989:0;exit

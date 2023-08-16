@@ -1,7 +1,10 @@
-require("nvim-treesitter.configs").setup({
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
-	indent = true,
-})
+return {
+  "nvim-treesitter/nvim-treesitter",
+  opts = function(_, opts)
+    -- add tsx and treesitter
+    vim.list_extend(opts.ensure_installed, {
+      "tsx",
+      "typescript",
+    })
+  end,
+}
