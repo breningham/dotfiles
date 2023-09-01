@@ -40,12 +40,12 @@ function open-project() {
 }
 
 function code() {
-	local args="$1"
+	local args="$@"
 	local flatpakCommand="flatpak run com.visualstudio.code"
 
 	if [ -z "${CONTAINER_ID}" ]; then
-		exec flatpak run com.visualstudio.code "$args"
+		flatpak run com.visualstudio.code "$args" &;
 	else
-		distrobox-host-exec flatpak run com.visualstudio.code "$args"
+		distrobox-host-exec flatpak run com.visualstudio.code "$args" &
 	fi
 }
