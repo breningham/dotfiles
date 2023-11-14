@@ -3,4 +3,5 @@ if status is-interactive
 end
 
 set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
+fish_add_path "$VOlTA_HOME/bin"
+
