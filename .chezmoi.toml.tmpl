@@ -1,0 +1,19 @@
+{{- $email := promptStringOnce . "email" "Email Address" -}}
+
+[data]
+    email = {{ $email | quote }}
+
+[git]
+    autoCommit = true
+    autoPush = true 
+
+[edit]
+    command = "nvim"
+
+[diff]
+    command = "nvim"
+    args = [ "-d", "-r", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}" ]
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
