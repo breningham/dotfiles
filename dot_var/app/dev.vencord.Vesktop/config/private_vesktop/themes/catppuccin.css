@@ -1,0 +1,12 @@
+/**
+  * @name Catppuccin Macchiato (Lavender accent)
+  * @author Catppuccin
+  * @version 1
+  * @description Soothing pastel theme for Discord
+  * @source https://github.com/catppuccin/discord
+  * @website https://github.com/catppuccin
+*/
+
+@import url("https://catppuccin.github.io/discord/dist/catppuccin-macchiato.theme.css");
+
+@import url("https://catppuccin.github.io/discord/dist/catppuccin-macchiato-lavender.theme.css");
