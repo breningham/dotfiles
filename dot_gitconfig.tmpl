@@ -1,15 +1,14 @@
 [user]
-	name = Brendan Ingham
-	email = {{- .email  -}}
+  name = Brendan Ingham
+  email = {{- .email  }}
 [color]
-	ui = auto
+  ui = auto
 [alias]
 
 [core]
-    	# TODO: check if i can use bat
-	pager = cat
-	editor = nvim
-	whitespace = -trailing-space
+  pager = bat --paging=always
+  editor = nvim
+  whitespace = -trailing-space
 
 [diff]
   # Use better, descriptive initials (c, i, w) instead of a/b.
@@ -22,6 +21,7 @@
   submodule = log
   # Use NVIM as default diff tool when running `git diff-tool`
   tool = nvim
+
 [difftool "nvim"]
   cmd = nvim -d $LOCAL $REMOTE	
 
