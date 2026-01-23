@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# This hash ensures the script re-runs when this list changes
+# packages: {{ "deskflow actionlint atuin bat chezmoi direnv fish fzf gh git-delta gnupg go lazygit lsd mise neovim pre-commit starship topgrade watchman wget yarn discord font-maple-mono font-maple-mono-nf ghostty google-chrome postman spotify zed" }}
+
+# 1. Homebrew Bundle
+brew bundle --no-lock --file=/dev/stdin <<EOF
+tap "deskflow/tap"
+tap "homebrew/bundle"
+
+# --- Core Tools ---
+brew "actionlint"
+brew "atuin", restart_service: :changed
+brew "bat"
+brew "chezmoi"
+brew "direnv"
+brew "fish"
+brew "fzf"
+brew "gh"
+brew "git-delta"
+brew "gnupg"
+brew "go"
+brew "lazygit"
+brew "lsd"
+brew "mise"
+brew "neovim"
+brew "pre-commit"
+brew "starship"
+brew "topgrade"
+brew "watchman"
+brew "wget"
+brew "yarn"
+
+# --- Applications ---
+cask "deskflow/tap/deskflow"
+cask "discord"
+cask "ghostty"
+cask "google-chrome"
+cask "postman"
+cask "spotify"
+cask "zed"
+cask "zen"
+
+# --- Fonts ---
+cask "font-maple-mono"
+cask "font-maple-mono-nf"
+EOF
