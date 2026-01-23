@@ -2,8 +2,11 @@
 set -gx EDITOR "zed --wait"
 set -gx VISUAL "zed --wait"
 
+{{- if eq .chezmoi.os "linux" }}
 # --- Bitwarden SSH Agent Handling ---
+# Only on Linux because we set it via launchctl on macos
 set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
+{{- end }}
 
 # --- Git & Workflow Aliases ---
 alias lg='lazygit'
