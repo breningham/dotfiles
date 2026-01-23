@@ -1,0 +1,17 @@
+# Ignore everything by default.
+**/*
+
+# Main Configs
+!config.fish
+!fish_plugins
+
+# Custom Functions
+!functions/gr.fish
+!functions/gsr.fish
+!functions/gw*.fish
+!functions/get-pr-url.fish
+!functions/ls.fish
+!functions/cat.fish
+!functions/create-prs.fish
+!functions/list-prs.fish
+!functions/serve.fish
