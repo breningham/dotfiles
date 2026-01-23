@@ -1,0 +1,42 @@
+# --- OS-Independent Path & Shell Setup ---
+set -gx EDITOR "zed --wait"
+set -gx VISUAL "zed --wait"
+
+# --- Bitwarden SSH Agent Handling ---
+# This ensures Git, Lazygit, and SSH use Bitwarden for keys/signing
+{{- if eq .chezmoi.os "darwin" }}
+set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
+{{- else if eq .chezmoi.os "linux" }}
+# Path for Bitwarden Desktop (AppImage/Native)
+set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
+{{- end }}
+
+# --- Git & Workflow Aliases ---
+alias lg='lazygit'
+alias g='git'
+
+# --- OS-Specific Aliases & Tooling ---
+{{- if eq .chezmoi.os "linux" }}
+# CachyOS / Arch Specifics
+alias update='sudo pacman -Syu'
+# Ensure Meld is in the path for 3-way merges
+{{- else if eq .chezmoi.os "darwin" }}
+# macOS / Homebrew Specifics
+alias update='topgrade'
+# Ensure Homebrew binaries are prioritized
+fish_add_path /opt/homebrew/bin
+{{- end }}
+
+if status is-interactive
+    # 1. Initialize Mise (Node, Bitwarden CLI, etc)
+    mise activate fish | source
+
+    # 2. Bitwarden Unlock Helper
+    function bw-unlock
+        set -gx BW_SESSION (bw unlock --raw)
+        echo "Bitwarden unlocked for this session."
+    end
+
+    # 3. Starship (Optional, but recommended for visual context)
+    starship init fish | source
+end

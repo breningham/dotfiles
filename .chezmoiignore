@@ -20,3 +20,7 @@
 !.config/fish/functions/create-prs.fish
 !.config/fish/functions/list-prs.fish
 !.config/fish/functions/serve.fish
+
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+{{ end }}

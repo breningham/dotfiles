@@ -1,0 +1,40 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# packages: {{ "actionlint atuin bat chezmoi direnv fish fzf github-cli git-delta gnupg go lazygit lsd mise-bin neovim pre-commit starship topgrade watchman wget yarn-bin discord google-chrome postman-bin spotify zed-preview-bin meld" }}
+
+# Ensure the system is up to date first
+paru -Syu --noconfirm
+
+# Install packages (paru handles both official repos and AUR)
+paru -S --needed --noconfirm \
+    actionlint \
+    atuin \
+    bat \
+    direnv \
+    fish \
+    fzf \
+    github-cli \
+    git-delta \
+    gnupg \
+    go \
+    lazygit \
+    lsd \
+    mise-bin \
+    neovim \
+    pre-commit \
+    starship \
+    topgrade \
+    watchman \
+    wget \
+    discord \
+    google-chrome \
+    postman-bin \
+    spotify \
+    zed-preview-bin \
+    zen-browser-bin \
+    zen-browser-bitwarden \
+    zen-browser-sponsorblock \
+    zen-browser-dark-reader \
+    meld
+
+{{ end -}}

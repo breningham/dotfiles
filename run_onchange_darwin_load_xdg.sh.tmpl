@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# This hash forces the script to run only when the content of the plist changes:
+# {{ include "dot_Library/LaunchAgents/setenv.XDG_CONFIG_HOME.plist.tmpl" | sha256sum }}
+
+# Unload potentially existing agent to force a refresh
+launchctl unload ~/Library/LaunchAgents/setenv.XDG_CONFIG_HOME.plist 2>/dev/null
+
+# Load the agent
+launchctl load -w ~/Library/LaunchAgents/setenv.XDG_CONFIG_HOME.plist
