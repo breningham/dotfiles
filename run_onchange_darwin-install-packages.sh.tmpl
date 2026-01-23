@@ -4,9 +4,8 @@
 # packages: {{ "deskflow actionlint atuin bat chezmoi direnv fish fzf gh git-delta gnupg go lazygit lsd mise neovim pre-commit starship topgrade watchman wget yarn discord font-maple-mono font-maple-mono-nf ghostty google-chrome postman spotify zed" }}
 
 # 1. Homebrew Bundle
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --file=/dev/stdin <<EOF
 tap "deskflow/tap"
-tap "homebrew/bundle"
 
 # --- Core Tools ---
 brew "actionlint"

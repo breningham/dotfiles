@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+launchctl setenv "XDG_CONFIG_HOME" "$HOME/.config"
+launchctl setenv "XDG_DATA_HOME" "$HOME/.local/share"
+launchctl setenv "XDG_CACHE_HOME" "$HOME/.cache"
+launchctl setenv "SSH_AUTH_SOCK" "$HOME/.bitwarden/ssh-agent.sock"
+{{ end -}}

@@ -1,0 +1,63 @@
+[user]
+    name = Brendan Ingham
+{{- if eq .chezmoi.os "darwin" }}
+    email = brendan.ingham@clickdealer.co.uk
+    signingkey = {{ (bitwarden "item" "c6b87e57-a43e-47bc-8502-b2800089be8b").sshKey.publicKey }}
+{{- else if eq .chezmoi.os "linux" }}
+    email = brendan@ingham.dev
+    signingkey = {{ (bitwarden "item" "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac").sshKey.publicKey }}
+{{- end }}
+
+[core]
+    editor = zed --wait
+    pager = delta
+    autocrlf = input
+
+[commit]
+    gpgsign = true
+
+[gpg]
+    program = ssh
+
+[gpg "ssh"]
+    allowedSigners = /Users/brendaningham/.ssh/allowedSigners
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    hyperlinks = true
+
+[merge]
+    tool = meld
+    conflictstyle = diff3
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+    trustExitCode = false
+
+[diff]
+    colorMoved = default
+    tool = delta
+
+[difftool "zed"]
+    cmd = zed --diff "$LOCAL" "$REMOTE"
+
+[alias]
+    # --- Worktree Management ---
+    wt-add = !git worktree add -b $1 ../$1
+    wt-ls = worktree list
+    wt-rm = !git worktree remove
+
+    # --- Tooling ---
+    zd = difftool -t zed -y
+    md = difftool -t meld -y
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    pr = !gh pr create -w
+
+[push]
+    autoSetupRemote = true
+    followTags = true
+
+[init]
+    defaultBranch = main
