@@ -1,5 +1,6 @@
 # 1. Recursive ignore for the whole fish directory
 .config/fish/**
+!.config/fish
 
 # 2. Allow the main config
 !.config/fish/config.fish
