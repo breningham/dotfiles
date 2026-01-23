@@ -1,0 +1,88 @@
+git:
+  overrideGpg: true
+  pagers:
+    - colorArg: always
+    - pager: delta --dark --paging=never
+gui:
+  showFileTree: true
+  mouseEvents: true
+  nerdFontsVersion: "3"
+  commitLength:
+    show: true
+  theme:
+    activeBorderColor:
+      - "#a6e3a1"
+      - bold
+    inactiveBorderColor:
+      - "#a6adc8"
+    optionsTextColor:
+      - "#89b4fa"
+    selectedLineBgColor:
+      - "#313244"
+    cherryPickedCommitBgColor:
+      - "#45475a"
+    cherryPickedCommitFgColor:
+      - "#a6e3a1"
+os:
+  edit: "zed {{filename}}"
+  editAtLine: "zed {{filename}}:{{line}}"
+  editAtLineAndWait: "zed --wait {{filename}}:{{line}}"
+  open: "bat {{filename}}"
+customCommands:
+  - key: "C"
+    command: 'git commit -m "{{.Form.Type}}: {{.Form.Message}}"'
+    context: "files"
+    description: "Commit with convention"
+    prompts:
+      - type: "menu"
+        title: "Commit Type"
+        key: "Type"
+        options:
+          - name: "feat"
+            description: "A new feature"
+            value: "feat"
+          - name: "fix"
+            description: "A bug fix"
+            value: "fix"
+          - name: "chore"
+            description: "Maintenance"
+            value: "chore"
+      - type: "input"
+        title: "Message"
+        key: "Message"
+        initialValue: ""
+  # Create PR
+  - key: "<c-p>"
+    command: 'gh pr create --title "{{.Form.Title}}" --body "{{.Form.Description}}" --base "{{.Form.Base}}" $(if [ "{{.Form.IsDraft}}" = "y" ]; then echo "--draft"; fi)'
+    context: "localBranches"
+    description: "Create new Pull Request"
+    prompts:
+      - type: "input"
+        title: "Title"
+        key: "Title"
+        initialValue: ""
+      - type: "input"
+        title: "Description"
+        key: "Description"
+        initialValue: ""
+      - type: "input"
+        title: "Base"
+        key: "Base"
+        initialValue: "main"
+      - type: "input"
+        title: "Create as Draft? (y/n)"
+        key: "IsDraft"
+        initialValue: "y"
+        options:
+          - name: "Yes"
+            value: y
+          - name: "No"
+            value: n
+    output: popup
+    outputTitle: "PR"
+  # View PR in browser
+  - key: "<c-o>"
+    command: "gh pr view --web"
+    context: "localBranches"
+    description: "View active pull request in browser"
+    loadingText: "Opening pull request on GitHub..."
