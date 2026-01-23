@@ -1,0 +1,16 @@
+#!/bin/bash
+# Trigger update when mise config changes: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+
+echo "Checking Mise runtimes..."
+
+# 1. Ensure mise is in the path for this script
+if command -v mise &> /dev/null; then
+    # 2. Install all tools defined in your config
+    # --yes handles prompts, --quiet keeps the chezmoi apply output clean
+    mise install --yes
+
+    # 3. Optional: Reshim to ensure fish/bash see the new binaries
+    mise reshim
+else
+    echo "Mise not found. Skipping runtime installation."
+fi
