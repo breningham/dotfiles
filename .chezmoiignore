@@ -21,6 +21,12 @@
 !.config/fish/functions/list-prs.fish
 !.config/fish/functions/serve.fish
 
+{{ if ne .chezmoi.os "linux" }}
+.local/bin/arctis_nova_monitor.sh
+.local/bin/toggle-monitor.sh
+.local/bin/zed
+{{ end }}
+
 {{ if ne .chezmoi.os "darwin" }}
 Library/
 {{ end }}

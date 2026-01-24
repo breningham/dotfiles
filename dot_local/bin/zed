@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This wrapper only exists to bridge Flatpak to the 'zed' command.
+exec flatpak run dev.zed.Zed "$@"

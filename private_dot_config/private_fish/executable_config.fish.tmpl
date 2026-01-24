@@ -24,6 +24,9 @@ alias update='topgrade'
 fish_add_path /opt/homebrew/bin
 {{- end }}
 
+# Local Executables go here.
+fish_add_path ~/.local/bin
+
 if status is-interactive
     # 1. Initialize Mise (Node, Bitwarden CLI, etc)
     mise activate fish | source
