@@ -1,12 +1,16 @@
+# -- Add Custom Script directory to path
+fish_add_path {{ .chezmoi.homeDir }}/.local/bin
+
 # --- OS-Independent Path & Shell Setup ---
 set -gx EDITOR "zed --wait"
 set -gx VISUAL "zed --wait"
 
 {{- if eq .chezmoi.os "linux" }}
 # --- Bitwarden SSH Agent Handling ---
-# Only on Linux because we set it via launchctl on macos
 set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
-{{- end }}
+{{- else if eq .chezmoi.os "darwin" }}
+set -gx SSH_AUTH_SOCK /Users/$USER/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
+{{ end -}}
 
 # --- Git & Workflow Aliases ---
 alias lg='lazygit'
@@ -23,9 +27,6 @@ alias update='topgrade'
 # Ensure Homebrew binaries are prioritized
 fish_add_path /opt/homebrew/bin
 {{- end }}
-
-# Local Executables go here.
-fish_add_path ~/.local/bin
 
 if status is-interactive
     # 1. Initialize Mise (Node, Bitwarden CLI, etc)
