@@ -20,7 +20,7 @@
     format = ssh
 
 [gpg "ssh"]
-    allowedSigners = /Users/brendaningham/.ssh/allowedSigners
+    allowedSigners = {{ .chezmoi.homeDir }}/.ssh/allowedSigners
 
 [delta]
     navigate = true
