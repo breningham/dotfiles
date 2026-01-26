@@ -1,5 +1,5 @@
 #!/bin/bash
-# Trigger update when mise config changes: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+# Trigger update when mise config changes: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
 
 echo "Checking Mise runtimes..."
 
