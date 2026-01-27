@@ -1,0 +1,4 @@
+[tools]
+{{ range $tool, $version := .packages.mise -}}
+"{{ $tool }}" = "{{ $version }}"
+{{ end -}}

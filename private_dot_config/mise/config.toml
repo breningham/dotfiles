@@ -1,7 +1,0 @@
-[tools]
-node = "24"
-npm = "latest"
-"npm:@bitwarden/cli" = "latest"
-"npm:@google/gemini-cli" = "latest"
-"npm:eslint" = "latest"
-"npm:typescript" = "latest"

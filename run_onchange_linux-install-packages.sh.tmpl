@@ -1,39 +1,19 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
-# packages: {{ "actionlint atuin bat chezmoi direnv fish fzf github-cli git-delta gnupg go lazygit lsd mise-bin neovim pre-commit starship topgrade watchman wget yarn-bin discord google-chrome postman-bin spotify zed-preview-bin meld" }}
+# Data Hash: {{ include ".chezmoidata.yaml" | sha256sum }}
 
-# Ensure the system is up to date first
-paru -Syu --noconfirm
+# 1. Native packages (common + linux specific)
+paru -Syu --needed --noconfirm \
+{{- range .packages.common }}
+    {{ . }} \
+{{- end }}
+{{- range .packages.linux }}
+    {{ . }} \
+{{- end }}
 
-# Install packages (paru handles both official repos and AUR)
-paru -S --needed --noconfirm \
-    actionlint \
-    shellcheck \
-    atuin \
-    bat \
-    direnv \
-    fish \
-    fzf \
-    github-cli \
-    git-delta \
-    gnupg \
-    go \
-    lazygit \
-    lsd \
-    mise \
-    neovim \
-    pre-commit \
-    starship \
-    topgrade \
-    wget \
-    discord \
-    google-chrome \
-    postman-bin \
-    spotify \
-    zed-preview-bin \
-    zen-browser-bin \
-    zen-browser-bitwarden \
-    zen-browser-sponsorblock \
-    meld
-
+# 2. Flatpaks
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+{{ range (index .packages "linux-flatpak") -}}
+flatpak install -y flathub {{ . }}
+{{ end -}}
 {{ end -}}

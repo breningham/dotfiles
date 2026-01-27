@@ -1,0 +1,49 @@
+packages:
+  common:
+    - bat
+    - fzf
+    - gh
+    - mise
+    - starship
+    - atuin
+    - direnv
+    - lsd
+    - neovim
+    - topgrade
+    - wget
+    - fish
+    - lazygit
+  darwin:
+    - bash
+    - git-delta
+  darwin-homebrew:
+    - ghostty
+    - google-chrome
+    - discord
+    - spotify
+    - postman
+    - font-maple-mono
+    - font-maple-mono-nf
+    - zed
+    - zen
+  linux:
+    - flatpak
+    - meld
+    - actionlint
+    - shellcheck
+    - gnupg
+    - go
+    - maplemono-nf
+  linux-flatpak:
+    - dev.zed.Zed
+    - com.discordapp.Discord
+    - com.spotify.Client
+    - org.videolan.VLC
+    - org.deskflow.deskflow
+  mise:
+    node: "24"
+    npm: "11.8.0"
+    npm:@bitwarden/cli: "latest"
+    npm:@google/gemini-cli: "latest"
+    npm:eslint: "latest"
+    npm:typescript: "latest"

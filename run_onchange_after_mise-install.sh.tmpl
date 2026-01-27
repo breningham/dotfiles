@@ -1,15 +1,16 @@
 #!/bin/bash
-# Trigger update when mise config changes: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+# Trigger update when mise config changes: {{ include "private_dot_config/mise/config.toml.tmpl" | sha256sum }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Ensure Homebrew mise is available during execution
+export PATH="/opt/homebrew/bin:$PATH"
+{{ end -}}
 
 echo "Checking Mise runtimes..."
 
-# 1. Ensure mise is in the path for this script
 if command -v mise &> /dev/null; then
-    # 2. Install all tools defined in your config
-    # --yes handles prompts, --quiet keeps the chezmoi apply output clean
+    # Install all tools defined in the generated config.toml
     mise install --yes
-
-    # 3. Optional: Reshim to ensure fish/bash see the new binaries
     mise reshim
 else
     echo "Mise not found. Skipping runtime installation."

@@ -6,7 +6,7 @@
 {{- else if eq .chezmoi.os "linux" }}
     email = brendan@ingham.dev
     signingkey = {{ (bitwarden "item" "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac").sshKey.publicKey }}
-{{ end -}}
+{{- end }}
 
 [core]
     editor = zed --wait
@@ -58,6 +58,8 @@
 [push]
     autoSetupRemote = true
     followTags = true
+[pull]
+	rebase = true
 
 [init]
     defaultBranch = main
