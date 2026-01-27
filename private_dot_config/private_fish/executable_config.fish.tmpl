@@ -10,7 +10,7 @@ set -gx VISUAL "zed --wait"
 set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
 {{- else if eq .chezmoi.os "darwin" }}
 set -gx SSH_AUTH_SOCK /Users/$USER/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
-{{ end -}}
+{{- end }}
 
 # --- Git & Workflow Aliases ---
 alias lg='lazygit'

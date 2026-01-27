@@ -12,8 +12,8 @@ paru -Syu --needed --noconfirm \
 {{- end }}
 
 # 2. Flatpaks
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 {{ range (index .packages "linux-flatpak") -}}
-flatpak install -y flathub {{ . }}
+flatpak install --system -y flathub {{ . }}
 {{ end -}}
 {{ end -}}
