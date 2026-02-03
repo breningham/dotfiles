@@ -1,11 +1,11 @@
 [user]
-    name = Brendan Ingham
+    name = {{ .identities.name }}
 {{- if eq .chezmoi.os "darwin" }}
-    email = brendan.ingham@clickdealer.co.uk
-    signingkey = {{ (bitwarden "item" "c6b87e57-a43e-47bc-8502-b2800089be8b").sshKey.publicKey }}
+    email = {{ .identities.work.email }}
+    signingkey = {{ (bitwarden "item" .identities.work.bw_id).sshKey.publicKey }}
 {{- else if eq .chezmoi.os "linux" }}
-    email = brendan@ingham.dev
-    signingkey = {{ (bitwarden "item" "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac").sshKey.publicKey }}
+    email = {{ .identities.personal.email }}
+    signingkey = {{ (bitwarden "item" .identities.personal.bw_id).sshKey.publicKey }}
 {{- end }}
 
 [core]
@@ -20,7 +20,7 @@
     format = ssh
 
 [gpg "ssh"]
-    allowedSigners = {{ .chezmoi.homeDir }}/.ssh/allowedSigners
+    allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowedSigners
 
 [delta]
     navigate = true

@@ -30,3 +30,5 @@
 {{ if ne .chezmoi.os "darwin" }}
 Library/
 {{ end }}
+
+README.md

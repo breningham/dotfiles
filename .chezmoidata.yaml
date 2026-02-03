@@ -1,3 +1,12 @@
+identities:
+  name: Brendan Ingham
+  personal:
+    email: brendan@ingham.dev
+    bw_id: "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac"
+  work:
+    email: brendan.ingham@clickdealer.co.uk
+    bw_id: "c6b87e57-a43e-47bc-8502-b2800089be8b"
+
 packages:
   common:
     - glow

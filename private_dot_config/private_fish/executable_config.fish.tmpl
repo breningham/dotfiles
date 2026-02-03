@@ -7,9 +7,9 @@ set -gx VISUAL "zed --wait"
 
 {{- if eq .chezmoi.os "linux" }}
 # --- Bitwarden SSH Agent Handling ---
-set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
+set -gx SSH_AUTH_SOCK "{{ .chezmoi.homeDir }}/.bitwarden-ssh-agent.sock"
 {{- else if eq .chezmoi.os "darwin" }}
-set -gx SSH_AUTH_SOCK /Users/$USER/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
+set -gx SSH_AUTH_SOCK "{{ .chezmoi.homeDir }}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
 {{- end }}
 
 # --- Git & Workflow Aliases ---

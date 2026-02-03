@@ -1,5 +1,5 @@
-{{- if eq .chezmoi.os "darwin" }}
-* ssh-ed25519 {{ (bitwarden "item" "c6b87e57-a43e-47bc-8502-b2800089be8b").sshKey.publicKey }}
-{{- else if eq .chezmoi.os "linux" }}
-* ssh-ed25519 {{ (bitwarden "item" "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac").sshKey.publicKey }}
-{{ end -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{ .identities.work.email }} ssh-ed25519 {{ (bitwarden "item" .identities.work.bw_id).sshKey.publicKey }}
+{{- else if eq .chezmoi.os "linux" -}}
+{{ .identities.personal.email }} ssh-ed25519 {{ (bitwarden "item" .identities.personal.bw_id).sshKey.publicKey }}
+{{- end }}
