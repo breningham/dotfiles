@@ -25,7 +25,7 @@ function gen-pr-summary -d "Generates PR description via AI"
     set -l template_instruction ""
     if test -f ".github/pull_request_template.md"
         set -l template (cat .github/pull_request_template.md)
-        set template_instruction "Please format the response according to this template:\n$template"
+        set template_instruction "Please format the response according to this template:\n$template\n remove any mentions of the template itself from the final output."
     end
 
     set -l ai_prompt "Analyze changes for '$branch_name'.
