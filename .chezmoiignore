@@ -17,9 +17,15 @@
 !.config/fish/functions/get-pr-url.fish
 !.config/fish/functions/ls.fish
 !.config/fish/functions/cat.fish
-!.config/fish/functions/create-prs.fish
-!.config/fish/functions/list-prs.fish
 !.config/fish/functions/serve.fish
+
+!.config/fish/functions/get-prs.fish
+!.config/fish/functions/__get_ticket_id.fish
+!.config/fish/functions/gen-pr-summary.fish
+!.config/fish/functions/create-pr.fish
+!.config/fish/functions/create-prs.fish
+# Custom Completions
+!.config/fish/completions/create-prs.fish
 
 {{ if ne .chezmoi.os "linux" }}
 .local/bin/arctis_nova_monitor.sh
