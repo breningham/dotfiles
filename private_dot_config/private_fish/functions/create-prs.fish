@@ -1,20 +1,37 @@
+function create-prs -d "Creates PRs for dev, staging, and production"
+    argparse 't/title=' 'b/body=' 'dry-run' -- $argv
+    or return 1
 
-function create-prs -a title -d "Creates PR's for dev, staging and production";
-    create-pr "$title" "dev" "develop"
-    create-pr "$title" "staging" "staging" --draft
-    create-pr "$title" "production" --draft
-end;
+    set -l title $_flag_title
+    set -l ticket (__get_ticket_id)
 
-function create-pr -a title env base -d "Creates a PR for the specified environment";
-    set -l draft_flag
-
-    if contains -- "--draft" $argv
-        set draft_flag "--draft"
+    # Auto-prepend ticket if missing from title
+    if test -n "$ticket"; and test -n "$title"
+        if not string match -qi "*$ticket*" "$title"
+            set title "$ticket: $title"
+        end
     end
 
-    if not test -n "$base"
-        set base "main"
+    # Handle body from flag or pipe
+    set -l body $_flag_body
+    if not set -q _flag_body; and not isatty stdin
+        set body (cat | string collect)
     end
 
-    gh pr create --fill --base "$base" --title "$title [$env]" $draft_flag && echo "Created PR for $env"
-end;
+    if set -q _flag_dry_run
+        echo "------------------------"
+        set_color cyan --bold; echo "TITLE: $title"; set_color normal
+        echo "$body" | render-markdown
+        echo "------------------------"
+        return 0
+    end
+
+    create-pr --title "$title" --body "$body" --env "dev" --base "develop"
+    create-pr --title "$title" --body "$body" --env "staging" --base "staging" --draft
+    create-pr --title "$title" --body "$body" --env "production" --base "main" --draft
+
+    if isatty stdout
+        echo -e "\n"(set_color green --bold)"PRs created!"(set_color normal)
+        echo "$body" | render-markdown
+    end
+end
