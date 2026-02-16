@@ -1,47 +1,50 @@
-# ~/.bashrc
-
-# Non-interactive check
-[[ $- != *i* ]] && return
-
+# Path & Environment Setup
 export PATH="$HOME/.local/bin:$PATH"
 
 if [[ "$(uname)" == "Darwin" ]]; then
+    # Homebrew prioritization for macOS
     export PATH="/opt/homebrew/bin:$PATH"
+    # Bitwarden SSH socket for macOS
     export SSH_AUTH_SOCK="$HOME/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
 else
+    # Linux specific SSH socket
     export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 fi
 
+# Default editor settings
 export EDITOR="zed --wait"
 export VISUAL="zed --wait"
 
+# Tool Initializations
+# Initialize Mise for runtimes
 if command -v mise &> /dev/null; then
-    eval "$(mise activate bash)"
+    eval "$(mise activate zsh)"
 fi
 
+# Initialize Atuin for shell history
 if command -v atuin &> /dev/null; then
-    eval "$(atuin init bash)"
+    eval "$(atuin init zsh)"
 fi
 
+# Initialize Starship prompt
 if command -v starship &> /dev/null; then
-    eval "$(starship init bash)"
+    eval "$(starship init zsh)"
 fi
 
-# Aliases
-alias ls='lsd --color=auto'
+#Aliases
+alias ls='lsd'
 alias cat='bat'
-alias grep='grep --color=auto'
 alias g='git'
 alias lg='lazygit'
 
-# OS-Specific updates
+# OS-Specific update alias
 if [[ "$(uname)" == "Linux" ]]; then
     alias update='sudo pacman -Syu'
 else
     alias update='topgrade'
 fi
 
-# Functions
+# 4. Functions
 bw-unlock() {
     export BW_SESSION=$(bw unlock --raw)
     echo "Bitwarden unlocked for this session."
@@ -53,3 +56,7 @@ serve() {
     echo "Serving current directory on 127.0.0.1:$port"
     python3 -m http.server "$port" --bind 127.0.0.1
 }
+
+# Zsh Specifics
+autoload -Uz compinit
+compinit
