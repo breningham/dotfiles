@@ -1,0 +1,5 @@
+{{- if eq .chezmoi.os "darwin" -}}
+{{- (bitwarden "item" .identities.work.bw_id).sshKey.publicKey -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{- (bitwarden "item" .identities.personal.bw_id).sshKey.publicKey -}}
+{{- end -}}

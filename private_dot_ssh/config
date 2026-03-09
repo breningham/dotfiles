@@ -1,0 +1,7 @@
+Host *
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/bitwarden-auth.pub
+
+Host github.com
+  HostName github.com
+  User git

@@ -28,16 +28,17 @@ alias update='topgrade'
 fish_add_path /opt/homebrew/bin
 {{- end }}
 
+if command -v mise &> /dev/null
+   mise activate fish | source
+end
+
+function bw-unlock
+    set -gx BW_SESSION (bw unlock --raw)
+    echo "Bitwarden unlocked for this session."
+end
+
 if status is-interactive
-    # 1. Initialize Mise (Node, Bitwarden CLI, etc)
-    mise activate fish | source
-
-    # 2. Bitwarden Unlock Helper
-    function bw-unlock
-        set -gx BW_SESSION (bw unlock --raw)
-        echo "Bitwarden unlocked for this session."
-    end
-
     atuin init fish | source
     starship init fish | source
+    carapace fish | source
 end

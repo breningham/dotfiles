@@ -57,4 +57,8 @@ packages:
     npm:@bitwarden/cli: "latest"
     npm:@google/gemini-cli: "latest"
     npm:eslint: "latest"
+    npm:@eslint/mcp: "latest"
     npm:typescript: "latest"
+    npm:turbo: "latest"
+    npm:prettier: "latest"
+    npm:@playwright/cli: "latest"
