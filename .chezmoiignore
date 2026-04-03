@@ -29,6 +29,12 @@
 # Custom Completions
 !.config/fish/completions/create-prs.fish
 
+# node_modules
+**/node_modules
+
+# opencode
+
+
 {{ if ne .chezmoi.os "linux" }}
 .local/bin/arctis_nova_monitor.sh
 .local/bin/toggle-monitor.sh
