@@ -45,5 +45,22 @@ function gwa --description 'Create a new git worktree, optionally from a source 
         git config --local push.autoSetupRemote true
 
         echo "  Switching to $target_path"
+
+        # --- EXECUTE HOOKS ---
+        # Passes the target path and branch name to the hook
+        set -l root_hook "$root_dir/.hooks/post-worktree-add.sh"
+        set -l repo_hook "$target_path/.hooks/post-worktree-add.sh"
+
+        # Execute root-level hook (affects all worktrees in this bare repo)
+        if test -x "$root_hook"
+            echo "  Running root hook..."
+            eval "$root_hook" "$target_path" "$new_branch"
+        end
+
+               # Execute repo-level hook (version-controlled inside the project)
+        if test -x "$repo_hook"
+            echo "  Running repository hook..."
+            eval "$repo_hook" "$target_path" "$new_branch"
+        end
     end
 end
