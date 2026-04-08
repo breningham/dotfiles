@@ -1,6 +1,6 @@
 ---
 description: Principal Frontend Builder (Next.js, React, Tailwind)
-model: openrouter/anthropic/claude-haiku-4.5
+model: openrouter/qwen/qwen3-coder:free
 mode: subagent
 tools:
   read: true

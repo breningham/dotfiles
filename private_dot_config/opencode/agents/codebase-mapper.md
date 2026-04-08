@@ -1,11 +1,11 @@
 ---
 description: Codebase Mapping Orchestrator (Replicates GSD map-codebase)
 mode: all
-model: openrouter/anthropic/claude-opus-4.6
+model: openrouter/google/gemini-3.1-pro-preview
 variant: "thinking"
 options:
   thinking: true
-  thinking_budget: 64000
+  thinking_budget: 16000
 tools:
   read: true
   bash: true

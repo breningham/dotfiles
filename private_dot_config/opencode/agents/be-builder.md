@@ -1,6 +1,6 @@
 ---
 description: Principal Backend Builder (AWS, Serverless, Node.js)
-model: openrouter/anthropic/claude-haiku-4.5
+model: openrouter/qwen/qwen3-coder:free
 mode: subagent
 tools:
   read: true

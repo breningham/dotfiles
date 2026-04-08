@@ -5,18 +5,7 @@
   "model": "openrouter/google/gemini-3-flash-preview",
   "provider": {
     "openrouter": {
-      "models": {
-        "openrouter/google/gemini-3.1-pro-preview": {
-          "options": {
-            "reasoningEffort": "high"
-          }
-        },
-        "openrouter/anthropic/claude-opus-4.6": {
-          "options": {
-            "reasoningEffort": "high"
-          }
-        }
-      }
+      "models": {}
     }
   },
   "mcp": {
@@ -33,11 +22,17 @@
     }
   },
   "agent": {
+    "chat": {
+      "path": "agents/chat.md"
+    },
     "map": {
       "path": "agents/codebase-mapper.md"
     },
     "plan": {
       "path": "agents/architect.md"
+    },
+    "slice": {
+      "path": "agents/slice-orchestrator.md"
     },
     "build": {
       "path": "agents/builder.md"
@@ -46,5 +41,5 @@
       "path": "agents/pr-orchestrator.md"
     }
   },
-  "default_agent": "plan"
+  "default_agent": "chat"
 }

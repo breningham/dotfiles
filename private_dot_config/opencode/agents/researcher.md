@@ -1,11 +1,7 @@
 ---
 description: Codebase Researcher (Generates State & Context Artifacts)
 mode: all
-model: openrouter/anthropic/claude-opus-4.6
-variant: "thinking"
-options:
-  thinking: true
-  thinking_budget: 32000
+model: openrouter/google/gemini-3-flash-preview
 tools:
   read: true
   bash: true

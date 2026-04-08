@@ -3,7 +3,7 @@ description: Expert Backend Code Reviewer (AWS, Lambda, Serverless, Step Functio
 model: openrouter/google/gemini-3.1-pro-preview
 options: 
   thinking: true
-  thinking_budget: 32000
+  thinking_budget: 16000
 mode: subagent
 tools:
   git: true
