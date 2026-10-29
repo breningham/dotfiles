@@ -46,3 +46,6 @@ Library/
 {{ end }}
 
 README.md
+
+# Python bytecode (kitty tab_bar.py)
+**/__pycache__

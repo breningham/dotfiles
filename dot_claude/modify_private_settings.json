@@ -1,0 +1,27 @@
+#!/bin/sh
+# chezmoi modify script for ~/.claude/settings.json: the current file arrives on
+# stdin and the new one goes to stdout. Only the kitty hook entries are managed
+# here; Claude Code keeps writing permissions and other settings to this file,
+# so it is never replaced wholesale. Hook groups that run ~/.claude/hooks/kitty-*
+# are dropped and re-added, which keeps re-applies idempotent. The hook scripts
+# are run through sh because chezmoi's symlink mode copies executable files.
+current=$(cat)
+command -v jq >/dev/null 2>&1 || { printf '%s' "$current"; exit 0; }
+[ -n "$current" ] || current='{}'
+
+printf '%s' "$current" | jq --argjson ours '{
+  "PostToolUse": [
+    { "matcher": "Edit|Write|MultiEdit",
+      "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-diff.sh", "timeout": 10 }] },
+    { "matcher": "*",
+      "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-status.sh busy", "timeout": 5 }] }
+  ],
+  "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-status.sh busy", "timeout": 5 }] }],
+  "Notification": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-status.sh waiting", "timeout": 5 }] }],
+  "Stop": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-status.sh done", "timeout": 5 }] }],
+  "SessionEnd": [{ "hooks": [{ "type": "command", "command": "sh ~/.claude/hooks/kitty-status.sh clear", "timeout": 5 }] }]
+}' '
+  .hooks = ((.hooks // {})
+    | map_values(map(select(any(.hooks[]?; (.command // "") | test("\\.claude/hooks/kitty-")) | not)))
+    | with_entries(select(.value | length > 0)))
+  | reduce ($ours | to_entries[]) as $e (.; .hooks[$e.key] += $e.value)'

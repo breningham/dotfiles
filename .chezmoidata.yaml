@@ -22,6 +22,10 @@ packages:
     - wget
     - fish
     - lazygit
+    - jq
+    - ripgrep
+    - fd
+    - tree-sitter-cli
   darwin:
     - bash
     - gh
@@ -36,6 +40,7 @@ packages:
     - font-maple-mono-nf
     - zed
     - zen
+    - kitty
   linux:
     - flatpak
     - meld
@@ -45,6 +50,7 @@ packages:
     - go
     - maplemono-nf
     - github-cli
+    - kitty
   linux-flatpak:
     - dev.zed.Zed
     - com.discordapp.Discord
