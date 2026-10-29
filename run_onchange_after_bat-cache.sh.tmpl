@@ -1,0 +1,5 @@
+#!/bin/bash
+# bat only sees custom themes after its cache is rebuilt. Themes hash:
+# {{ range glob (joinPath .chezmoi.sourceDir "private_dot_config/bat/themes/*") }}{{ include . | sha256sum | trunc 12 }} {{ end }}
+command -v bat >/dev/null && bat cache --build >/dev/null
+exit 0

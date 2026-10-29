@@ -1,5 +1,15 @@
-# Generated into ~/.config/chezmoi/chezmoi.toml by `chezmoi init`.
-# Symlink mode: plain files become symlinks into this repo, so editing them in
-# place (kitty, nvim, ...) edits the repo directly and nothing drifts. Templates,
-# private_, executable_ and modify_ files are still written as real files.
+{{- /* Generated into ~/.config/chezmoi/chezmoi.toml by `chezmoi init`. */ -}}
+{{- $default := "personal" -}}
+{{- if eq .chezmoi.os "darwin" }}{{ $default = "work" }}{{ end -}}
+{{- $profile := promptChoiceOnce . "profile" "Git/SSH identity for this machine" (list "personal" "work") $default -}}
+
+# Symlink mode: plain files become symlinks into the source dir, so editing them
+# in place (kitty, nvim, ...) edits the repo directly and nothing drifts.
+# Templates, private_, executable_ and modify_ files are still real files.
 mode = "symlink"
+
+[data]
+profile = {{ $profile | quote }}
+
+[diff]
+pager = "delta"

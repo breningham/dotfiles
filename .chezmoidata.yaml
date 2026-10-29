@@ -2,10 +2,12 @@ identities:
   name: Brendan Ingham
   personal:
     email: brendan@ingham.dev
-    bw_id: "b4292ecb-c0aa-4ae4-8f0a-b284017a86ac"
+    # Public half of the Bitwarden "Linux PC" SSH key (auth + commit signing).
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8VYgkqBwPYIVM3qkbsUMetkXPKfcGUK7jc3EIl8dud"
   work:
     email: brendan.ingham@clickdealer.co.uk
-    bw_id: "c6b87e57-a43e-47bc-8502-b2800089be8b"
+    # Public half of the Bitwarden "Macbook" SSH key.
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJsnGQ0Jtr6zAtvT41nVz2PB2lLcTsWZ/fWD2LF7uzRd"
 
 packages:
   common:
@@ -26,10 +28,10 @@ packages:
     - ripgrep
     - fd
     - tree-sitter-cli
+    - git-delta
   darwin:
     - bash
     - gh
-    - git-delta
   darwin-homebrew:
     - ghostty
     - google-chrome
@@ -48,9 +50,12 @@ packages:
     - shellcheck
     - gnupg
     - go
-    - maplemono-nf
     - github-cli
     - kitty
+  # Not in the CachyOS/Arch repos; installed with paru or yay when present.
+  linux-aur:
+    - topgrade
+    - maplemono-nf
   linux-flatpak:
     - dev.zed.Zed
     - com.discordapp.Discord

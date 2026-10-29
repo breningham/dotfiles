@@ -1,0 +1,31 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# Runs before files are applied (the settings.json modify script needs jq), and
+# again only when the Linux package lists change:
+# {{ list .packages.common .packages.linux (index .packages "linux-aur") (index .packages "linux-flatpak") | toJson | sha256sum }}
+# Installs what is missing; it never upgrades the system (that's `update`).
+set -euo pipefail
+
+missing() { for p in "$@"; do pacman -Qq "$p" &>/dev/null || echo "$p"; done; }
+
+{{- $aur := index .packages "linux-aur" }}
+repo=($(missing{{ range concat .packages.common .packages.linux }}{{ if not (has . $aur) }} {{ . }}{{ end }}{{ end }}))
+if (( ${#repo[@]} )); then
+  echo "pacman: installing ${repo[*]}"
+  sudo pacman -S --needed --noconfirm "${repo[@]}"
+fi
+
+aur=($(missing {{ $aur | join " " }}))
+if (( ${#aur[@]} )); then
+  if helper=$(command -v paru || command -v yay); then
+    "$helper" -S --needed --noconfirm "${aur[@]}"
+  else
+    echo "AUR packages not installed (no paru/yay): ${aur[*]}"
+  fi
+fi
+
+if command -v flatpak &>/dev/null; then
+  flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak install --system -y --noninteractive flathub {{ index .packages "linux-flatpak" | join " " }}
+fi
+{{ end -}}

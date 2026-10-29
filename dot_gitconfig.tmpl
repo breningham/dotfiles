@@ -1,12 +1,8 @@
 [user]
     name = {{ .identities.name }}
-{{- if eq .chezmoi.os "darwin" }}
-    email = {{ .identities.work.email }}
-    signingkey = {{ (bitwarden "item" .identities.work.bw_id).sshKey.publicKey }}
-{{- else if eq .chezmoi.os "linux" }}
-    email = {{ .identities.personal.email }}
-    signingkey = {{ (bitwarden "item" .identities.personal.bw_id).sshKey.publicKey }}
-{{- end }}
+{{- $id := index .identities .profile }}
+    email = {{ $id.email }}
+    signingkey = {{ $id.ssh_key }}
 
 [core]
     editor = zed --wait

@@ -1,5 +1,2 @@
-{{- if eq .chezmoi.os "darwin" -}}
-{{ .identities.work.email }} ssh-ed25519 {{ (bitwarden "item" .identities.work.bw_id).sshKey.publicKey }}
-{{- else if eq .chezmoi.os "linux" -}}
-{{ .identities.personal.email }} ssh-ed25519 {{ (bitwarden "item" .identities.personal.bw_id).sshKey.publicKey }}
-{{- end }}
+{{ .identities.personal.email }} {{ .identities.personal.ssh_key }}
+{{ .identities.work.email }} {{ .identities.work.ssh_key }}

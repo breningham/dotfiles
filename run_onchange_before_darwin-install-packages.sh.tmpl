@@ -1,0 +1,16 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Runs before files are applied, and again only when the macOS package lists change:
+# {{ list .packages.common .packages.darwin (index .packages "darwin-homebrew") | toJson | sha256sum }}
+set -euo pipefail
+export PATH="/opt/homebrew/bin:$PATH"
+
+brew bundle --file=/dev/stdin <<BREWFILE
+{{- range concat .packages.common .packages.darwin }}
+brew "{{ . }}"
+{{- end }}
+{{- range index .packages "darwin-homebrew" }}
+cask "{{ . }}"
+{{- end }}
+BREWFILE
+{{ end -}}

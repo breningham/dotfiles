@@ -47,7 +47,7 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-command = /usr/bin/fish
+command = {{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/fish{{ else }}/usr/bin/fish{{ end }}
 shell-integration = fish
 
 font-family = "Maple Mono NF"

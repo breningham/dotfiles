@@ -1,39 +1,9 @@
-# 1. Recursive ignore for the whole fish directory
-.config/fish/**
-!.config/fish
+# Only files that exist in this repo are ever managed, so nothing else in
+# ~/.config/fish (fisher plugins etc.) needs listing here.
 
-# 2. Allow the main config
-!.config/fish/config.fish
-!.config/fish/fish_plugins
-
-# 3. Allow the functions FOLDER, but ignore its CONTENTS by default
-!.config/fish/functions
-.config/fish/functions/**
-
-# 4. Allow your specific custom functions
-!.config/fish/functions/gr.fish
-!.config/fish/functions/gsr.fish
-!.config/fish/functions/gw*.fish
-!.config/fish/functions/ls.fish
-!.config/fish/functions/cat.fish
-!.config/fish/functions/serve.fish
-
-!.config/fish/functions/get-prs.fish
-!.config/fish/functions/get-pr-url.fish
-!.config/fish/functions/__get_ticket_id.fish
-!.config/fish/functions/gen-pr-summary.fish
-!.config/fish/functions/create-pr.fish
-!.config/fish/functions/create-prs.fish
-!.config/fish/functions/close-prs.fish
-!.config/fish/functions/merge-prs.fish
-# Custom Completions
-!.config/fish/completions/create-prs.fish
-
-# node_modules
+README.md
 **/node_modules
-
-# opencode
-
+**/__pycache__
 
 {{ if ne .chezmoi.os "linux" }}
 .local/bin/arctis_nova_monitor.sh
@@ -44,8 +14,3 @@
 {{ if ne .chezmoi.os "darwin" }}
 Library/
 {{ end }}
-
-README.md
-
-# Python bytecode (kitty tab_bar.py)
-**/__pycache__

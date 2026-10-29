@@ -38,8 +38,8 @@ function bw-unlock
 end
 
 if status is-interactive
-    atuin init fish | source
-    starship init fish | source
-    carapace fish | source
-    aws-sso setup completions --source --shell fish | source
+    command -q atuin; and atuin init fish | source
+    command -q starship; and starship init fish | source
+    command -q carapace; and carapace fish | source
+    command -q aws-sso; and aws-sso setup completions --source --shell fish | source
 end
