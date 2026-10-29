@@ -2,6 +2,7 @@
 fish_add_path {{ .chezmoi.homeDir }}/.local/bin
 
 # --- OS-Independent Path & Shell Setup ---
+set -g fish_greeting  # no "Welcome to fish" banner
 set -gx EDITOR "zed --wait"
 set -gx VISUAL "zed --wait"
 
