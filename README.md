@@ -44,6 +44,8 @@ dots pull       # chezmoi update: pull and apply
 - `private_dot_config/nvim/`: Neovim 0.12 (`vim.pack`; its lock file is tracked and updated in place).
 - `dot_claude/hooks/`: Claude Code hooks for the kitty review pane and tab badges. They are stored
   non-executable, so they stay symlinks, and run via `sh`.
+  The pane diffs code in whichever repo Claude edits and shows Markdown docs rendered, including
+  plan-mode plans in `~/.claude/plans` (the one place outside a git repo it reacts to).
 - `dot_claude/modify_private_settings.json`: merges those hook entries into `~/.claude/settings.json` with
   `jq`, leaving everything else Claude Code writes there alone.
 - `.chezmoiignore`: per-OS exclusions. Only files in this repo are ever managed, so there's no need to

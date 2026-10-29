@@ -7,6 +7,7 @@
 # opened by hand with Ctrl+Shift+A r is reused too, and Claude sessions in other
 # tabs get their own panes. If Claude was launched from Neovim (claudecode.nvim,
 # IDE protocol) the diff is already shown inside that Neovim, so this does nothing.
+# Only files inside a git repo count, plus plan-mode plans in ~/.claude/plans.
 [ -n "$KITTY_LISTEN_ON" ] && [ -n "$KITTY_WINDOW_ID" ] || exit 0
 [ -n "$CLAUDE_CODE_SSE_PORT" ] && exit 0
 command -v nvim >/dev/null 2>&1 && command -v jq >/dev/null 2>&1 || exit 0
@@ -14,7 +15,14 @@ command -v nvim >/dev/null 2>&1 && command -v jq >/dev/null 2>&1 || exit 0
 input=$(cat)
 file=$(printf '%s' "$input" | jq -r '.tool_input.file_path // empty')
 [ -f "$file" ] || exit 0
-root=$(git -C "$(dirname "$file")" rev-parse --show-toplevel 2>/dev/null) || exit 0
+root=$(git -C "$(dirname "$file")" rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$root" ]; then
+  # Plan-mode plans live outside any repo; the pane shows them rendered as docs.
+  case $file in
+    "$HOME"/.claude/plans/*.md) root=$(dirname "$file") ;;
+    *) exit 0 ;;
+  esac
+fi
 
 # Line to jump to: find the longest line of the new text in the file, minus its
 # offset within that text. 0 means "first hunk" (whole-file Write).
