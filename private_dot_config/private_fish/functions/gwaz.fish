@@ -1,20 +1,19 @@
-function gwaz --description 'Create a worktree and replace current Zed window'
+function gwaz --description 'Create a worktree and open it in Neovim'
     if contains -- -h $argv; or contains -- --help $argv
         echo "  Usage: gwaz <new-branch> [source-branch]"
         echo ""
         echo "Description:"
         echo "  Wrapper around 'gwa' that creates a new worktree,"
-        echo "  then REPLACES the current Zed workspace with the new one."
+        echo "  then opens Neovim in the new one."
         return 0
     end
 
     # 1. Call your existing 'gwa' function
-    # We capture the status to ensure we only switch Zed if creation succeeded
+    # We capture the status to ensure we only open Neovim if creation succeeded
     gwa $argv
 
-    # 2. If 'gwa' was successful, reuse the Zed window
+    # 2. If 'gwa' was successful, open Neovim there
     if test $status -eq 0
-        echo "zed  Updating Zed workspace..."
-        zed -r .
+        nvim .
     end
 end

@@ -1,10 +1,10 @@
-function gwz --description 'Fuzzy find a worktree and replace current Zed window'
+function gwz --description 'Fuzzy find a worktree and open it in Neovim'
     if contains -- -h $argv; or contains -- --help $argv
         echo "  Usage: gwz"
         echo ""
         echo "Description:"
         echo "  Interactive list (fzf) to switch worktrees,"
-        echo "  then REPLACES the current Zed workspace with the selection."
+        echo "  then opens Neovim in the selection."
         return 0
     end
 
@@ -18,8 +18,7 @@ function gwz --description 'Fuzzy find a worktree and replace current Zed window
         echo "  Switching shell to $target_path"
         cd $target_path
 
-        # 3. Reuse the Zed window
-        echo "zed  Updating Zed workspace..."
-        zed -r .
+        # 3. Open Neovim there
+        nvim .
     end
 end

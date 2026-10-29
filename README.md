@@ -33,14 +33,14 @@ dots pull       # chezmoi update: pull and apply
 - `.chezmoi.toml.tmpl`: symlink mode, the machine's `profile` and `kitty_keys`, delta for `chezmoi diff`.
 - `run_onchange_before_{linux,darwin}-install-packages.sh.tmpl`: install missing packages. They rerun only
   when the package lists change, and never upgrade the system. Linux uses pacman for repo packages,
-  paru/yay for `linux-aur`, and flatpak; macOS uses `brew bundle`.
+  and paru/yay for `linux-aur`; macOS uses `brew bundle`.
 - `run_onchange_after_mise-install.sh.tmpl`, `run_onchange_after_bat-cache.sh.tmpl`: mise runtimes and the bat
   theme cache.
 - `private_dot_config/kitty/`: `kitty.conf` is shared and ends with `include ${KITTY_OS}.conf`, so the OS
   differences live in `linux.conf` / `macos.conf` and the files stay symlinks. `tab_bar.py` turns its
   KDE-only window buttons off on macOS.
   `macos.conf` includes the generated `macos-keys.conf`, which pulls in `macos-cmd-keys.conf` when
-  `kitty_keys` is `cmd`. `open-actions.conf` (a template) opens text-file links in Zed.
+  `kitty_keys` is `cmd`. `open-actions.conf` opens text-file links in Neovim in a new tab.
 - `private_dot_config/nvim/`: Neovim 0.12 (`vim.pack`; its lock file is tracked and updated in place).
 - `dot_claude/hooks/`: Claude Code hooks for the kitty review pane and tab badges. They are stored
   non-executable, so they stay symlinks, and run via `sh`.

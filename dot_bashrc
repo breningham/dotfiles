@@ -7,8 +7,8 @@ else
     export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 fi
 
-export EDITOR="zed --wait"
-export VISUAL="zed --wait"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 if command -v mise &> /dev/null; then
     eval "$(mise activate bash)"

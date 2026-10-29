@@ -12,8 +12,8 @@ else
 fi
 
 # Default editor settings
-export EDITOR="zed --wait"
-export VISUAL="zed --wait"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # Tool Initializations
 # Initialize Mise for runtimes

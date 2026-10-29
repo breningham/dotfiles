@@ -8,7 +8,6 @@ README.md
 {{ if ne .chezmoi.os "linux" }}
 .local/bin/arctis_nova_monitor.sh
 .local/bin/toggle-monitor.sh
-.local/bin/zed
 {{ end }}
 
 {{ if ne .chezmoi.os "darwin" }}

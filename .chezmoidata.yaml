@@ -39,11 +39,13 @@ packages:
     - postman
     - font-maple-mono
     - font-maple-mono-nf
-    - zed
     - zen
     - kitty
   linux:
-    - flatpak
+    - discord
+    - spotify-launcher
+    - vlc
+    - deskflow
     - meld
     - actionlint
     - shellcheck
@@ -55,12 +57,6 @@ packages:
   linux-aur:
     - topgrade
     - maplemono-nf
-  linux-flatpak:
-    - dev.zed.Zed
-    - com.discordapp.Discord
-    - com.spotify.Client
-    - org.videolan.VLC
-    - org.deskflow.deskflow
   mise:
     node: "24"
     npm: "11.8.0"

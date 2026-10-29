@@ -24,9 +24,7 @@ gui:
     cherryPickedCommitFgColor:
       - "#a6e3a1"
 os:
-  edit: "zed {{filename}}"
-  editAtLine: "zed {{filename}}:{{line}}"
-  editAtLineAndWait: "zed --wait {{filename}}:{{line}}"
+  editPreset: "nvim"
   open: "bat {{filename}}"
 customCommands:
   - key: "C"
