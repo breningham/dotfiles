@@ -5,7 +5,8 @@
 -- pane opened by hand with Ctrl+Shift+A r) can be found again with `kitten @ ls`.
 -- Later edits call ClaudeReview.refresh(file, line) via --remote-expr: the
 -- Diffview is refreshed, the edited file selected and the edited line flashed.
--- An edit in a different git repo reopens the Diffview in that repo.
+-- An edit in a different git repo reopens the Diffview in that repo, and an edit
+-- to a Markdown doc shows the doc rendered (in its own tabpage) instead of a diff.
 local M = {}
 
 local ns = vim.api.nvim_create_namespace('claude_review')
@@ -58,17 +59,48 @@ local function select_file(view, file, line)
   reveal(file, line)
 end
 
-local function flush()
-  local edits = pending
-  pending = {}
-  if #edits == 0 then return end
-  local last = edits[#edits]
-  vim.cmd('silent! checktime')
+-- Markdown docs (plans, specs, READMEs) are shown rendered by render-markdown
+-- instead of diffed. That also covers docs git ignores, which Diffview never lists.
+local doc_tab -- the tabpage that shows docs; Diffview keeps its own tabpage
 
+local function is_doc(file)
+  return file:match('%.md$') or file:match('%.markdown$')
+end
+
+local function blank_tab()
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+  local buf = vim.api.nvim_win_get_buf(wins[1])
+  return #wins == 1 and vim.api.nvim_buf_get_name(buf) == '' and not vim.bo[buf].modified
+end
+
+local function show_doc(file, line)
+  if doc_tab and vim.api.nvim_tabpage_is_valid(doc_tab) then
+    vim.api.nvim_set_current_tabpage(doc_tab)
+  else
+    if not blank_tab() then vim.cmd('tabnew') end
+    doc_tab = vim.api.nvim_get_current_tabpage()
+  end
+  pcall(vim.cmd.edit, vim.fn.fnameescape(file)) -- re-reads the file if it is already open
+  reveal(file, line)
+end
+
+-- The Diffview may sit in a tabpage other than the current one (the doc tab).
+local function find_view(lib)
+  local view = lib.get_current_view()
+  if view then return view end
+  for _, v in ipairs(lib.views) do
+    if vim.api.nvim_tabpage_is_valid(v.tabpage) then
+      vim.api.nvim_set_current_tabpage(v.tabpage)
+      return v
+    end
+  end
+end
+
+local function show_diff(file, line)
   local ok, lib = pcall(require, 'diffview.lib')
   if not ok then return end
-  local root = select(2, relpath(last.file))
-  local view = lib.get_current_view()
+  local root = select(2, relpath(file))
+  local view = find_view(lib)
   -- Claude moved on to another repo (a sibling service in a multi-repo workspace,
   -- another worktree): reopen the Diffview there rather than refresh the old one.
   if view and not same_dir(view.adapter and view.adapter.ctx.toplevel, root) then
@@ -77,12 +109,27 @@ local function flush()
   end
   if not view then
     vim.cmd.cd(root)
-    vim.cmd('DiffviewOpen')
+    -- Explicit -C: Diffview otherwise prefers the current buffer's repo (a doc's).
+    vim.cmd('DiffviewOpen -C' .. vim.fn.fnameescape(root))
     view = lib.get_current_view()
   end
   if view then
-    view.emitter:once('files_updated', function() vim.schedule(function() select_file(view, last.file, last.line) end) end)
+    view.emitter:once('files_updated', function() vim.schedule(function() select_file(view, file, line) end) end)
     view:update_files() -- debounced, so harmless right after DiffviewOpen
+  end
+end
+
+local function flush()
+  local edits = pending
+  pending = {}
+  if #edits == 0 then return end
+  local last = edits[#edits]
+  vim.cmd('silent! checktime')
+
+  if is_doc(last.file) then
+    show_doc(last.file, last.line)
+  else
+    show_diff(last.file, last.line)
   end
 
   local names, seen = {}, {}
