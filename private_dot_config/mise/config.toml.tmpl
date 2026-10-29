@@ -1,4 +1,11 @@
 [tools]
 {{ range $tool, $version := .packages.mise -}}
 "{{ $tool }}" = "{{ $version }}"
-{{ end -}}
+{{ end }}
+[settings]
+# Skip releases younger than 6h (supply-chain buffer), except fast-moving AI CLIs.
+minimum_release_age = "6h"
+minimum_release_age_excludes = ["codex", "claude-code"]
+
+[settings.npm]
+shell_out = true

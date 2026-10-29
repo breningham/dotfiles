@@ -5,7 +5,8 @@
 set -euo pipefail
 export PATH="/opt/homebrew/bin:$PATH"
 
-brew bundle --file=/dev/stdin <<BREWFILE
+# --no-upgrade: install what's missing, leave installed versions alone.
+brew bundle --no-upgrade --file=/dev/stdin <<BREWFILE
 {{- range concat .packages.common .packages.darwin }}
 brew "{{ . }}"
 {{- end }}

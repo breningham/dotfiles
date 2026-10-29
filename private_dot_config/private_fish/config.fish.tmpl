@@ -41,6 +41,7 @@ end
 if status is-interactive
     command -q atuin; and atuin init fish | source
     command -q starship; and starship init fish | source
-    command -q carapace; and carapace fish | source
+    # `_carapace` is the init script; `carapace fish` would print fish's own zsh completer.
+    command -q carapace; and carapace _carapace fish | source
     command -q aws-sso; and aws-sso setup completions --source --shell fish | source
 end

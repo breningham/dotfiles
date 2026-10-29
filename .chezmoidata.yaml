@@ -17,7 +17,6 @@ packages:
     - mise
     - starship
     - atuin
-    - direnv
     - lsd
     - neovim
     - topgrade
@@ -73,3 +72,8 @@ packages:
     npm:turbo: "latest"
     npm:prettier: "latest"
     npm:@playwright/cli: "latest"
+    npm:typescript-language-server: "latest"
+    bun: "latest"
+    uv: "latest"
+    python: "3.14"
+    codex: "latest"

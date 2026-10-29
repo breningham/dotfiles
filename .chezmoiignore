@@ -13,4 +13,8 @@ README.md
 
 {{ if ne .chezmoi.os "darwin" }}
 Library/
+.config/kitty/macos-keys.conf
+.config/kitty/macos-cmd-keys.conf
+.config/fish/functions/wl-copy.fish
+.config/fish/functions/wl-paste.fish
 {{ end }}

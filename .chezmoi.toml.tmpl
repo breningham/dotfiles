@@ -2,6 +2,9 @@
 {{- $default := "personal" -}}
 {{- if eq .chezmoi.os "darwin" }}{{ $default = "work" }}{{ end -}}
 {{- $profile := promptChoiceOnce . "profile" "Git/SSH identity for this machine" (list "personal" "work") $default -}}
+{{- /* Linux always uses Ctrl (Super belongs to KDE); macOS can pick Cmd shortcuts instead. */ -}}
+{{- $kittyKeys := "ctrl" -}}
+{{- if eq .chezmoi.os "darwin" }}{{ $kittyKeys = promptChoiceOnce . "kitty_keys" "Kitty shortcuts: Cmd (macOS style) or Ctrl (same as Linux)" (list "cmd" "ctrl") "cmd" }}{{ end -}}
 
 # Symlink mode: plain files become symlinks into the source dir, so editing them
 # in place (kitty, nvim, ...) edits the repo directly and nothing drifts.
@@ -10,6 +13,7 @@ mode = "symlink"
 
 [data]
 profile = {{ $profile | quote }}
+kitty_keys = {{ $kittyKeys | quote }}
 
 [diff]
 pager = "delta"

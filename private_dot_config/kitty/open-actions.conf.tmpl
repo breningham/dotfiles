@@ -1,0 +1,8 @@
+# Open local text-file links in Zed.
+protocol file
+mime text/*
+action launch --type=background {{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/zed{{ else }}zeditor{{ end }} -- $FILE_PATH
+
+# Open SSH links in a separate OS window.
+protocol ssh
+action launch --type=os-window ssh $URL
