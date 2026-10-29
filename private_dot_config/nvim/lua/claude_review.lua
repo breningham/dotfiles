@@ -5,6 +5,7 @@
 -- pane opened by hand with Ctrl+Shift+A r) can be found again with `kitten @ ls`.
 -- Later edits call ClaudeReview.refresh(file, line) via --remote-expr: the
 -- Diffview is refreshed, the edited file selected and the edited line flashed.
+-- An edit in a different git repo reopens the Diffview in that repo.
 local M = {}
 
 local ns = vim.api.nvim_create_namespace('claude_review')
@@ -14,6 +15,12 @@ local timer = assert(vim.uv.new_timer())
 local function relpath(file)
   local root = vim.fs.root(file, '.git') or vim.fn.getcwd()
   return vim.fs.relpath(root, file) or file, root
+end
+
+-- git reports resolved paths (/private/tmp, not /tmp), so compare real paths.
+local function same_dir(a, b)
+  if not a or not b then return false end
+  return (vim.uv.fs_realpath(a) or a) == (vim.uv.fs_realpath(b) or b)
 end
 
 -- Find the window showing the working-tree copy of `file` (Diffview's right side).
@@ -60,11 +67,19 @@ local function flush()
 
   local ok, lib = pcall(require, 'diffview.lib')
   if not ok then return end
-  if not lib.get_current_view() then
-    vim.cmd.cd(select(2, relpath(last.file)))
-    vim.cmd('DiffviewOpen')
-  end
+  local root = select(2, relpath(last.file))
   local view = lib.get_current_view()
+  -- Claude moved on to another repo (a sibling service in a multi-repo workspace,
+  -- another worktree): reopen the Diffview there rather than refresh the old one.
+  if view and not same_dir(view.adapter and view.adapter.ctx.toplevel, root) then
+    vim.cmd('DiffviewClose')
+    view = nil
+  end
+  if not view then
+    vim.cmd.cd(root)
+    vim.cmd('DiffviewOpen')
+    view = lib.get_current_view()
+  end
   if view then
     view.emitter:once('files_updated', function() vim.schedule(function() select_file(view, last.file, last.line) end) end)
     view:update_files() -- debounced, so harmless right after DiffviewOpen
