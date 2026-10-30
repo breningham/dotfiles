@@ -7,6 +7,15 @@ sync_address = "https://atuin.tail86146.ts.net"
 
 enter_accept = true
 
+## Dates as dd/mm.
+dialect = "uk"
+
+## Search this machine's history by default; ctrl-r cycles to global etc.
+## Most imported history has no shell recorded, and search.shells = "auto"
+## lets those through, so global mode shows other machines' fish/zsh
+## commands in bash.
+filter_mode = "host"
+
 [daemon]
 ## Needed for thread capture; started on demand by the CLI.
 enabled = true
@@ -15,3 +24,11 @@ autostart = true
 [threads]
 ## Capture Claude Code/Codex/etc. sessions into the encrypted record store.
 capture = true
+
+[pty_proxy]
+## Run the shell inside `atuin pty-proxy` so command output is captured
+## (`atuin output search`, and the MCP server).
+enabled = true
+
+[output]
+enabled = true
