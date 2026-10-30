@@ -42,6 +42,9 @@ dots pull       # chezmoi update: pull and apply
   `macos.conf` includes the generated `macos-keys.conf`, which pulls in `macos-cmd-keys.conf` when
   `kitty_keys` is `cmd`. `open-actions.conf` opens text-file links in Neovim in a new tab.
 - `private_dot_config/nvim/`: Neovim 0.12 (`vim.pack`; its lock file is tracked and updated in place).
+- `private_dot_config/atuin/config.toml`: only the non-default settings (self-hosted sync on homelab1,
+  thread capture). A leftover `~/.atuin/config.toml` takes priority over it, so move that aside on a new
+  machine; the key and session in `~/.atuin/data` stay out of the repo.
 - `dot_claude/hooks/`: Claude Code hooks for the kitty review pane and tab badges. They are stored
   non-executable, so they stay symlinks, and run via `sh`.
   The pane diffs code in whichever repo Claude edits and shows Markdown docs rendered, including

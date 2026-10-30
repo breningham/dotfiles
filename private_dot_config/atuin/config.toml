@@ -1,0 +1,17 @@
+## Atuin client config, shared across machines via chezmoi. Only non-defaults
+## live here; `atuin default-config` prints the full annotated file.
+## `atuin config set/enable` writes through the chezmoi symlink, so either works.
+
+## Self-hosted on homelab1 (podman, ~/services/atuin), tailnet-only.
+sync_address = "https://atuin.tail86146.ts.net"
+
+enter_accept = true
+
+[daemon]
+## Needed for thread capture; started on demand by the CLI.
+enabled = true
+autostart = true
+
+[threads]
+## Capture Claude Code/Codex/etc. sessions into the encrypted record store.
+capture = true
