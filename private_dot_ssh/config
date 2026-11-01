@@ -5,3 +5,8 @@ Host *
 Host github.com
   HostName github.com
   User git
+
+# Tailscale MagicDNS name; the macOS account differs from the Linux one.
+Host macbook
+  HostName brendans-macbook-pro
+  User brendaningham
