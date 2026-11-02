@@ -1,47 +1,139 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 add_newline = true
 palette = "catppuccin_mocha"
-right_format = """$mise $nodejs $aws"""
+command_timeout = 1000
 
+# Powerline capsules. Lines with Nerd Font glyphs look blank in some editors;
+# keep the file UTF-8 when editing. Caps: U+E0B6 left, U+E0B4 right.
+# Each ( ... ) group only renders when a module inside it has output.
+format = """
+[](fg:mauve)$os$hostname[](fg:mauve bg:lavender)$directory[](fg:lavender)\
+( [](fg:peach)$git_branch$git_commit$git_state$git_status[](fg:peach))\
+$fill\
+([](fg:surface0)$python$nodejs$bun$rust$golang$docker_context[](fg:surface0) )\
+([](fg:blue)$aws[](fg:blue) )\
+([](fg:yellow)$cmd_duration[](fg:yellow))\
+( [](fg:green)$jobs[](fg:green))
+$character"""
+
+[fill]
+symbol = " "
+
+# Hostname joins the OS segment, only over SSH. Map long names to short ones:
+[hostname]
+ssh_only = true
+ssh_symbol = ""
+trim_at = "."
+style = "bg:mauve fg:crust bold"
+format = "[$ssh_symbol$hostname ]($style)"
+
+[hostname.aliases]
+"Brendans-MacBook-Pro" = "mbp"
 
 [os]
 disabled = false
-style = "bold mauve"
+style = "bg:mauve fg:crust"
+format = "[$symbol ]($style)"
 
 [os.symbols]
 Macos = ""
 Arch = ""
+Ubuntu = ""
+Debian = ""
+Fedora = ""
+Linux = ""
 
-[character]
-success_symbol = "[(green) ❯](peach)"
-error_symbol = "[(red) ❯](peach)"
-vimcmd_symbol = "[ ❮](subtext1)" # For use with zsh-vi-mode
-
-[package]
-disabled = true
+[directory]
+style = "bg:lavender fg:crust bold"
+read_only = " \U000f033e"
+read_only_style = "bg:lavender fg:red"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true
+format = "[ $path]($style)[$read_only]($read_only_style)[ ]($style)"
 
 [git_branch]
 symbol = " "
-style = "bold mauve"
+style = "bg:peach fg:crust bold"
 ignore_bare_repo = true
+format = "[$symbol$branch(:$remote_branch)]($style)"
 
-[mise]
-disabled = false
-format = '[ \[mise $health\]]($style)'
-symbol = ' '
-healthy_symbol = ' '
-unhealthy_symbol = ' '
-style = 'bold peach'
+[git_commit]
+style = "bg:peach fg:crust"
+tag_symbol = "  "
+format = '[ \($hash$tag\)]($style)'
+
+[git_state]
+style = "bg:peach fg:crust bold"
+format = '[ \($state( $progress_current/$progress_total)\)]($style)'
+
+# Leading space on each symbol keeps counts readable: "!2 ?1 ⇡37"
+[git_status]
+style = "bg:peach fg:crust"
+format = '([$all_status$ahead_behind]($style))'
+conflicted = " =${count}"
+ahead = " ⇡${count}"
+behind = " ⇣${count}"
+diverged = " ⇡${ahead_count}⇣${behind_count}"
+untracked = " ?${count}"
+stashed = " ≡${count}"
+modified = " !${count}"
+staged = " +${count}"
+renamed = " »${count}"
+deleted = " ✘${count}"
+
+[python]
+symbol = " "
+style = "bg:surface0 fg:yellow"
+format = '[ $symbol$pyenv_prefix($version)( \($virtualenv\)) ]($style)'
 
 [nodejs]
-format = '[\[$symbol $version\]]($style)'
+symbol = " "
+style = "bg:surface0 fg:green"
+format = "[ $symbol($version) ]($style)"
+
+[bun]
+symbol = " "
+style = "bg:surface0 fg:rosewater"
+format = "[ $symbol($version) ]($style)"
+
+[rust]
+symbol = "\U000f1617 "
+style = "bg:surface0 fg:peach"
+format = "[ $symbol($version) ]($style)"
+
+[golang]
+symbol = " "
+style = "bg:surface0 fg:sky"
+format = "[ $symbol($version) ]($style)"
+
+[docker_context]
+symbol = " "
+style = "bg:surface0 fg:blue"
+format = "[ $symbol$context ]($style)"
 
 [aws]
-format = '[\[$symbol$profile\]]($style)'
-style = 'bold lavender'
-symbol = ' '
+symbol = " "
+style = "bg:blue fg:crust bold"
+format = '[$symbol$profile( \($region\))]($style)'
+
 [aws.profile_aliases]
 Enterprise_Naming_schema-voidstars = 'void**'
+
+[cmd_duration]
+min_time = 2000
+style = "bg:yellow fg:crust"
+format = "[ $duration]($style)"
+
+[jobs]
+symbol = "✦"
+style = "bg:green fg:crust bold"
+format = "[$symbol$number]($style)"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold mauve)" # For use with zsh-vi-mode
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
