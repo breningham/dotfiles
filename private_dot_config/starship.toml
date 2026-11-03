@@ -7,7 +7,7 @@ command_timeout = 1000
 # keep the file UTF-8 when editing. Caps: U+E0B6 left, U+E0B4 right.
 # Each ( ... ) group only renders when a module inside it has output.
 format = """
-[](fg:mauve)$os$hostname[](fg:mauve bg:lavender)$directory[](fg:lavender)\
+$shell$os$hostname[](fg:mauve bg:lavender)$directory[](fg:lavender)\
 ( [](fg:peach)$git_branch$git_commit$git_state$git_status[](fg:peach))\
 $fill\
 ([](fg:surface0)$python$nodejs$bun$rust$golang$docker_context[](fg:surface0) )\
@@ -35,9 +35,25 @@ disabled = false
 style = "bg:mauve fg:crust"
 format = "[$symbol ]($style)"
 
+# Which shell is running. The shell module also opens the mauve OS capsule:
+# each shell gets its own capsule before it: fish teal, anything else red.
+# Icons padded with a space on each side so they sit centred in the capsule.
+# Nerd Font: U+F023A fish, U+E795 terminal, U+EBCA bash
+[shell]
+disabled = false
+fish_indicator = "[](fg:teal)[ 󰈺 ](bg:teal fg:crust)[](fg:teal) [](fg:mauve)"
+zsh_indicator = "[](fg:red)[  ](bg:red fg:crust)[](fg:red) [](fg:mauve)"
+bash_indicator = "[](fg:red)[  ](bg:red fg:crust)[](fg:red) [](fg:mauve)"
+unknown_indicator = "[](fg:red)[  ](bg:red fg:crust)[](fg:red) [](fg:mauve)"
+format = "$indicator"
+
 [os.symbols]
 Macos = ""
 Arch = ""
+CachyOS = ""
+EndeavourOS = ""
+Manjaro = ""
+NixOS = ""
 Ubuntu = ""
 Debian = ""
 Fedora = ""
